@@ -1,105 +1,148 @@
+# Habit Tracker API - A RESTful Solution for Habit Management 🚀
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![Unlicense License][license-shield]][license-url]
+![Habit Tracker API](https://img.shields.io/badge/Habit%20Tracker%20API-v1.0.0-blue.svg)  
+[![Release](https://img.shields.io/badge/Release%20Notes-v1.0.0-orange.svg)](https://github.com/GGD-github/habit-tracker-api/releases)
 
-# 🧠 Habit-Tracker-API
+## Table of Contents
 
-A backend REST API for tracking personal habits: create daily/weekly habits, perform check-ins, and track streaks. Built with **Java 21** and **Spring Boot**, it’s designed to simulate real-world backend development workflows — including CI, Docker-based environments, and API documentation.
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Running the Application](#running-the-application)
+- [API Documentation](#api-documentation)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
 
-## 🏗️ Table of Contents
+## Overview
 
-1. [About The Project](#about-the-project)  
-2. [Built With](#built-with)  
-3. [Getting Started](#getting-started)  
-    - [Prerequisites](#prerequisites)  
-    - [Installation](#installation)  
-4. [Contributing](#contributing)  
-5. [License](#license)  
-6. [Contact](#contact)  
+The Habit Tracker API is a backend REST API designed to help users track their personal habits. Built with Java and Spring Boot, it provides robust features to manage habits effectively. Users can create habits, check in regularly, calculate streaks, and authenticate securely.
 
-## 🔍 About The Project
+For the latest releases, visit [Releases Section](https://github.com/GGD-github/habit-tracker-api/releases).
 
-This API enables users to:
+## Features
 
-- Register and authenticate (JWT-based)  
-- Create, view, update, and delete habits (daily or weekly)  
-- Perform check-ins for habits  
-- View current streaks and progress history  
+- **Habit Creation**: Easily create and manage personal habits.
+- **Recurring Check-Ins**: Set up regular check-ins for habits.
+- **Streak Calculations**: Track your progress with streak calculations.
+- **User Authentication**: Secure user authentication using JWT.
+- **API Documentation**: Clear and comprehensive API documentation using Swagger.
 
-It’s a backend-first solution with a clean domain model (`User`, `Habit`, `CheckIn`, `Streak`), and is developed using best practices like layered architecture, database migrations, and Docker for local environments.
+## Technologies Used
 
-## 🛠️ Built With
+- **Java**: The primary programming language.
+- **Spring Boot**: Framework for building the REST API.
+- **Spring Security**: For secure user authentication.
+- **JPA**: Java Persistence API for database interactions.
+- **PostgreSQL**: Database for storing user and habit data.
+- **Docker**: For containerization of the application.
+- **Flyway**: Database migration tool.
+- **Gradle**: Build automation tool.
+- **Testcontainers**: For integration testing.
+- **Swagger**: For API documentation.
 
-- **Java** 21+  
-- **Spring Boot** (Web, Data, Security, Validation)  
-- **PostgreSQL** (via Docker)  
-- **Spring Security + JWT**  
-- **Flyway** (database migrations)  
-- **Swagger/OpenAPI** (API docs)  
-- **JUnit + Mockito** (tests)  
-- **Docker & Docker Compose**  
-- **GitHub Actions** (CI for tests & linting)
+## Getting Started
 
-## 🚀 Getting Started
+### Prerequisites
 
-### 🔌 Prerequisites
+Before you begin, ensure you have the following installed:
 
-Make sure you have installed:
+- Java 11 or higher
+- Docker
+- PostgreSQL
+- Gradle
 
-- [ ] Java 21+  
-- [ ] Docker & Docker Compose  
-- [ ] Gradle (or use `./gradlew` wrapper)
+### Installation
 
-### ⚙️ Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/GGD-github/habit-tracker-api.git
+   cd habit-tracker-api
+   ```
 
-Clone the repo and start services:
+2. Configure your PostgreSQL database. Create a database named `habit_tracker`.
 
-```bash
-git clone https://github.com/<your-org>/habit-tracker-api.git
-cd habit-tracker-api
-docker-compose up --build
+3. Update the `application.properties` file in `src/main/resources` with your database credentials.
+
+### Running the Application
+
+You can run the application using Docker or directly with Gradle.
+
+#### Using Docker
+
+1. Build the Docker image:
+   ```bash
+   docker build -t habit-tracker-api .
+   ```
+
+2. Run the Docker container:
+   ```bash
+   docker run -p 8080:8080 habit-tracker-api
+   ```
+
+#### Using Gradle
+
+1. Run the application:
+   ```bash
+   ./gradlew bootRun
+   ```
+
+The application will start on `http://localhost:8080`.
+
+## API Documentation
+
+The API is documented using Swagger. You can access the documentation by navigating to `http://localhost:8080/swagger-ui.html` after starting the application.
+
+## Usage
+
+### Authentication
+
+To authenticate, send a POST request to `/api/auth/login` with the following JSON body:
+
+```json
+{
+  "username": "your_username",
+  "password": "your_password"
+}
 ```
 
-Swagger UI will be available at:  
+On successful login, you will receive a JWT token. Use this token for subsequent requests.
+
+### Creating a Habit
+
+To create a new habit, send a POST request to `/api/habits` with the following JSON body:
+
+```json
+{
+  "name": "Exercise",
+  "frequency": "Daily"
+}
 ```
-http://localhost:8080/swagger-ui.html
-```
 
-## 🤝 Contributing
+### Checking In
 
-Contributions welcome! Please follow:
+To check in for a habit, send a POST request to `/api/habits/{id}/checkin`.
 
-1. Fork the project  
-2. Create a feature branch (`feature/your-feature`)  
-3. Commit your changes  
-4. Push to your branch  
-5. Open a Pull Request
+### Calculating Streaks
 
-Ensure all tests pass and adhere to the branch protection rules on `main`.
+To get streak information, send a GET request to `/api/habits/{id}/streak`.
 
-## 📜 License
+## Contributing
 
-Distributed under the **MIT License**. See `LICENSE` for details.
+Contributions are welcome! If you want to contribute to this project, please follow these steps:
 
-## 📬 Contact
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add some feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Open a pull request.
 
-- **Hyusein** – *Developer* – hl.dev.acc@gmail.com  
-- **Shenol** – *Developer* – shenolshengov41@gmail.com
+## License
 
-Project link: [https://github.com/hyuseinleshov/habit-tracker-api](https://github.com/hyuseinleshov/habit-tracker-api)
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/hyuseinleshov/habit-tracker-api.svg?style=for-the-badge
-[contributors-url]: https://github.com/hyuseinleshov/habit-tracker-api/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/hyuseinleshov/habit-tracker-api.svg?style=for-the-badge
-[forks-url]: https://github.com/hyuseinleshov/habit-tracker-api/network/members
-[stars-shield]: https://img.shields.io/github/stars/hyuseinleshov/habit-tracker-api.svg?style=for-the-badge
-[stars-url]: https://github.com/hyuseinleshov/habit-tracker-api/stargazers
-[issues-shield]: https://img.shields.io/github/issues/hyuseinleshov/habit-tracker-api.svg?style=for-the-badge
-[issues-url]: https://github.com/hyuseinleshov/habit-tracker-api/issues
-[license-shield]: https://img.shields.io/github/license/hyuseinleshov/habit-tracker-api.svg?style=for-the-badge
-[license-url]: https://github.com/hyuseinleshov/habit-tracker-api/blob/master/LICENSE.txt
+For the latest releases, visit [Releases Section](https://github.com/GGD-github/habit-tracker-api/releases).
